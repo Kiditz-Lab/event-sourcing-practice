@@ -1,7 +1,7 @@
-package com.stafsus.practice.product.query
+package com.stafsus.practice.product.command
 
-import com.stafsus.practice.product.core.data.ProductEntity
-import com.stafsus.practice.product.core.data.ProductRepository
+import com.stafsus.practice.product.core.data.ProductLookupEntity
+import com.stafsus.practice.product.core.data.ProductLookupRepository
 import com.stafsus.practice.product.core.event.ProductRegisteredEvent
 import org.axonframework.config.ProcessingGroup
 import org.axonframework.eventhandling.EventHandler
@@ -9,17 +9,15 @@ import org.springframework.stereotype.Component
 
 @Component
 @ProcessingGroup("product-group")
-class ProductEventHandler(
-    private val repository: ProductRepository
+class ProductLookupEventHandler(
+    private val repository: ProductLookupRepository
 ) {
     @EventHandler
     fun on(event: ProductRegisteredEvent) {
-        val product = ProductEntity(
+        val lookup = ProductLookupEntity(
             id = event.productId,
             title = event.title,
-            price = event.price,
-            quantity = event.quantity
         )
-        repository.save(product)
+        repository.save(lookup)
     }
 }

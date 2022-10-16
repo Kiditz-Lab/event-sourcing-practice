@@ -29,3 +29,9 @@ eureka:
       defaultZone: http://localhost:8761//eureka
   instance:
     instance-id: "${spring.application.name}:${instanceId:${random.value}}"
+
+axon:
+  event-handling:
+    processors:
+      product-group:
+        mode: subscribing
