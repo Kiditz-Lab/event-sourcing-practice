@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component
 @Component
 class ProductQueryHandler(
     private val repository: ProductRepository,
-    private val mapper: ProductMapper,
+    private val mapper: ProductEntityMapper,
 ) {
 
     @QueryHandler

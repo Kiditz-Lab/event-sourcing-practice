@@ -7,7 +7,7 @@ import org.mapstruct.Mapper
 import org.mapstruct.Mapping
 
 @Mapper(config = EntityMapper::class)
-interface ProductMapper : EntityMapper<ProductEntity, ProductResponse> {
+interface ProductEntityMapper : EntityMapper<ProductEntity, ProductResponse> {
     @Mapping(source = "id", target = "productId")
     override fun toModel(source: ProductEntity): ProductResponse
 }
