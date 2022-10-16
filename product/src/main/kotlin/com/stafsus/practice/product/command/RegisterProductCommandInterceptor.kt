@@ -17,7 +17,10 @@ class RegisterProductCommandInterceptor(
             log.info("Interceptor command : ${command.payloadType}")
             if (RegisterProductCommand::class.java == command.payloadType) {
                 val (productId, title) = command.payload as RegisterProductCommand
-                lookupRepository.findByIdOrTitle(productId, title) ?: throw IllegalStateException("Product with productId: $productId or title: $title already exists")
+                val product = lookupRepository.findByIdOrTitle(productId, title)
+                if(product != null){
+                    throw IllegalStateException("Product with productId: $productId or title: $title already exists")
+                }
             }
             command
         }
