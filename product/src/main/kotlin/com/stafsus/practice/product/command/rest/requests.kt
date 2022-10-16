@@ -12,3 +12,4 @@ data class RegisterProductRequest(
     @field:Min(value = 1L)
     val quantity: Int
 )
+
