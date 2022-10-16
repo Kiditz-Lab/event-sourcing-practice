@@ -22,7 +22,7 @@ server:
     include-message: ALWAYS
     include-binding-errors: ALWAYS
     include-stacktrace: NEVER
-    include-exception: true
+    include-exception: false
 eureka:
   client:
     service-url:
