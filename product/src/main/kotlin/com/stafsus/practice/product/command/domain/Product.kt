@@ -10,6 +10,7 @@ import org.axonframework.spring.stereotype.Aggregate
 import java.lang.IllegalArgumentException
 import java.math.BigDecimal
 import org.axonframework.modelling.command.AggregateLifecycle.apply
+import java.lang.RuntimeException
 
 @Aggregate
 class Product @CommandHandler constructor(command: RegisterProductCommand) {
