@@ -6,11 +6,9 @@ import org.apache.commons.lang.StringUtils.isBlank
 import org.axonframework.commandhandling.CommandHandler
 import org.axonframework.eventsourcing.EventSourcingHandler
 import org.axonframework.modelling.command.AggregateIdentifier
-import org.axonframework.spring.stereotype.Aggregate
-import java.lang.IllegalArgumentException
-import java.math.BigDecimal
 import org.axonframework.modelling.command.AggregateLifecycle.apply
-import java.lang.RuntimeException
+import org.axonframework.spring.stereotype.Aggregate
+import java.math.BigDecimal
 
 @Aggregate
 class Product @CommandHandler constructor(command: RegisterProductCommand) {
