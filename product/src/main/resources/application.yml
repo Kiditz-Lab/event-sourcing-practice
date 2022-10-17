@@ -18,11 +18,6 @@ spring:
 
 server:
   port: "0"
-  error:
-    include-message: ALWAYS
-    include-binding-errors: ALWAYS
-    include-stacktrace: NEVER
-    include-exception: false
 eureka:
   client:
     service-url:
