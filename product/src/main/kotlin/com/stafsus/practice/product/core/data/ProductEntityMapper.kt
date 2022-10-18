@@ -1,4 +1,4 @@
-package com.stafsus.practice.product.query
+package com.stafsus.practice.product.core.data
 
 import com.stafsus.practice.product.core.EntityMapper
 import com.stafsus.practice.product.core.data.ProductEntity

@@ -11,14 +11,17 @@ import org.axonframework.spring.stereotype.Aggregate
 import java.math.BigDecimal
 
 @Aggregate
-class Product @CommandHandler constructor(command: RegisterProductCommand) {
+class Product {
     @AggregateIdentifier
     private lateinit var productId: String
     private lateinit var title: String
     private lateinit var price: BigDecimal
     private var quantity: Int = 0
 
-    init {
+    constructor()
+
+    @CommandHandler
+    constructor(command: RegisterProductCommand) {
         if (command.price <= BigDecimal.ZERO) {
             throw IllegalArgumentException("Price cannot be less or equal zero")
         }
