@@ -1,10 +1,8 @@
-package com.stafsus.practice.product.configuration
+package com.stafsus.practice.order.configuration
 
-import com.stafsus.practice.product.command.RegisterProductCommandInterceptor
 import org.axonframework.commandhandling.CommandBus
 import org.axonframework.messaging.interceptors.BeanValidationInterceptor
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.context.ApplicationContext
 import org.springframework.context.annotation.Configuration
 
 @Configuration
@@ -13,10 +11,4 @@ class AxonConfiguration() {
     fun registerInterceptors(commandBus: CommandBus) {
         commandBus.registerDispatchInterceptor(BeanValidationInterceptor())
     }
-
-    @Autowired
-    fun registerProductCommandInterceptor(commandBus: CommandBus, context: ApplicationContext) {
-        commandBus.registerDispatchInterceptor(context.getBean(RegisterProductCommandInterceptor::class.java))
-    }
-
 }

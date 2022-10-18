@@ -4,7 +4,6 @@ import com.stafsus.practice.core.commands.ReserveProductCommand
 import com.stafsus.practice.core.events.ProductReservedEvent
 import com.stafsus.practice.order.core.event.OrderCreatedEvent
 import com.stafsus.practice.order.core.event.OrderRejectedEvent
-import org.axonframework.commandhandling.CommandCallback
 import org.axonframework.commandhandling.callbacks.LoggingCallback
 import org.axonframework.commandhandling.gateway.CommandGateway
 import org.axonframework.modelling.saga.EndSaga

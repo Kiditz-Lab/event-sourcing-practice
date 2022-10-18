@@ -6,6 +6,7 @@ import org.axonframework.queryhandling.QueryGateway
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import java.util.concurrent.CompletableFuture
 
 @RestController
 @RequestMapping("/products")
@@ -13,8 +14,8 @@ class ProductQueryController(
     private val queryGateway: QueryGateway
 ) {
     @GetMapping
-    fun getProducts(): List<ProductResponse> {
+    fun getProducts(): CompletableFuture<MutableList<ProductResponse>> {
         val query = FindProductsQuery()
-        return queryGateway.query(query, ResponseTypes.multipleInstancesOf(ProductResponse::class.java)).join()
+        return queryGateway.query(query, ResponseTypes.multipleInstancesOf(ProductResponse::class.java))
     }
 }

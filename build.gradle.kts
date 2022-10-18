@@ -22,7 +22,7 @@ allprojects {
 }
 
 
-java.sourceCompatibility = JavaVersion.VERSION_17
+java.sourceCompatibility = JavaVersion.VERSION_11
 
 subprojects {
     group = "com.stafsus.omnichannel"
@@ -52,7 +52,7 @@ subprojects {
     }
     tasks.withType<KotlinCompile> {
         kotlinOptions.freeCompilerArgs = listOf("-Xjsr305=strict")
-        kotlinOptions.jvmTarget = "17"
+        kotlinOptions.jvmTarget = "11"
     }
 
     tasks.withType<Test> {
