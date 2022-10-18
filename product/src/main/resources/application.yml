@@ -30,3 +30,7 @@ axon:
     processors:
       product-group:
         mode: subscribing
+  serializer:
+    general: JACKSON
+    messages: JACKSON
+    events: JACKSON
