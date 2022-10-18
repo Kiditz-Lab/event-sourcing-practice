@@ -3,10 +3,8 @@ package com.stafsus.practice.order.saga
 import com.stafsus.practice.core.commands.ReserveProductCommand
 import com.stafsus.practice.core.events.ProductReservedEvent
 import com.stafsus.practice.order.core.event.OrderCreatedEvent
-import com.stafsus.practice.order.core.event.OrderRejectedEvent
 import org.axonframework.commandhandling.callbacks.LoggingCallback
 import org.axonframework.commandhandling.gateway.CommandGateway
-import org.axonframework.modelling.saga.EndSaga
 import org.axonframework.modelling.saga.SagaEventHandler
 import org.axonframework.modelling.saga.StartSaga
 import org.axonframework.spring.stereotype.Saga
@@ -16,7 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired
 @Saga
 class OrderSaga {
 
-    private val log = LoggerFactory.getLogger(javaClass)
+    companion object {
+        private val log = LoggerFactory.getLogger(OrderSaga::class.java)
+    }
 
     @Autowired
     @Transient
@@ -41,9 +41,9 @@ class OrderSaga {
     }
 
 
-    @EndSaga
-    @SagaEventHandler(associationProperty = "orderId")
-    fun handle(event: OrderRejectedEvent) {
-        log.info("OrderRejectedEvent is called for orderId: ${event.orderId}")
-    }
+//    @EndSaga
+//    @SagaEventHandler(associationProperty = "orderId")
+//    fun handle(event: OrderRejectedEvent) {
+//        log.info("OrderRejectedEvent is called for orderId: ${event.orderId}")
+//    }
 }

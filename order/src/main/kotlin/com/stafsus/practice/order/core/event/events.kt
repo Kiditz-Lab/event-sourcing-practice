@@ -2,7 +2,7 @@ package com.stafsus.practice.order.core.event
 
 import com.stafsus.practice.order.core.model.OrderStatus
 
-data class OrderCreatedEvent(
+class OrderCreatedEvent(
     val orderId: String,
     val productId: String,
     val userId: String,
