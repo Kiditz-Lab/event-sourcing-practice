@@ -10,6 +10,7 @@ val axonVersion: String by project
 val mapStructVersion: String by project
 
 dependencies {
+    implementation(project(":core"))
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-validation")

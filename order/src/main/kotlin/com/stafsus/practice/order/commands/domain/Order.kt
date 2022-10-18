@@ -1,6 +1,6 @@
-package com.stafsus.practice.order.command.domain
+package com.stafsus.practice.order.commands.domain
 
-import com.stafsus.practice.order.command.CreateOrderCommand
+import com.stafsus.practice.order.commands.CreateOrderCommand
 import com.stafsus.practice.order.core.event.OrderCreatedEvent
 import com.stafsus.practice.order.core.model.OrderStatus
 import org.axonframework.commandhandling.CommandHandler

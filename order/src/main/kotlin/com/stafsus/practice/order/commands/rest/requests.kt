@@ -1,4 +1,4 @@
-package com.stafsus.practice.order.command.rest
+package com.stafsus.practice.order.commands.rest
 
 import javax.validation.constraints.Min
 import javax.validation.constraints.NotBlank

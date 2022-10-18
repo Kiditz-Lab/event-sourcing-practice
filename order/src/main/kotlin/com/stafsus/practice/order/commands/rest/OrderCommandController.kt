@@ -1,6 +1,6 @@
-package com.stafsus.practice.order.command.rest
+package com.stafsus.practice.order.commands.rest
 
-import com.stafsus.practice.order.command.CreateOrderCommand
+import com.stafsus.practice.order.commands.CreateOrderCommand
 import org.axonframework.commandhandling.gateway.CommandGateway
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*

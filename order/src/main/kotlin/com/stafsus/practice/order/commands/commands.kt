@@ -1,4 +1,4 @@
-package com.stafsus.practice.order.command
+package com.stafsus.practice.order.commands
 
 import com.stafsus.practice.order.core.model.OrderStatus
 import org.axonframework.modelling.command.TargetAggregateIdentifier

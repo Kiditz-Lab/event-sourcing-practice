@@ -8,5 +8,11 @@ data class OrderCreatedEvent(
     val userId: String,
     val quantity: Int,
     val addressId: String,
-    val status: OrderStatus
+    val status: OrderStatus = OrderStatus.CREATED
+)
+
+data class OrderRejectedEvent(
+    val orderId: String,
+    val reason: String,
+    val status: OrderStatus = OrderStatus.REJECTED
 )

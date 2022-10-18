@@ -1,5 +1,7 @@
 package com.stafsus.practice.product.command.domain
 
+import com.stafsus.practice.core.commands.ReserveProductCommand
+import com.stafsus.practice.core.events.ProductReservedEvent
 import com.stafsus.practice.product.command.RegisterProductCommand
 import com.stafsus.practice.product.core.event.ProductRegisteredEvent
 import org.apache.commons.lang.StringUtils.isBlank
@@ -31,11 +33,24 @@ class Product {
         apply(ProductRegisteredEvent(command.productId, command.title, command.price, command.quantity))
     }
 
+    @CommandHandler
+    fun handle(command: ReserveProductCommand) {
+        if (quantity < command.quantity) {
+            throw IllegalArgumentException("Insufficient number of items in stock")
+        }
+        apply(ProductReservedEvent(command.productId, command.orderId, command.userId, command.quantity))
+    }
+
     @EventSourcingHandler
     fun on(event: ProductRegisteredEvent) {
         productId = event.productId
         title = event.title
         price = event.price
         quantity = event.quantity
+    }
+
+    @EventSourcingHandler
+    fun on(event: ProductReservedEvent) {
+        quantity -= event.quantity
     }
 }
