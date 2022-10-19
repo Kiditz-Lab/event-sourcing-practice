@@ -9,5 +9,4 @@ val mapStructVersion: String by project
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("org.axonframework:axon-spring-boot-starter:${axonVersion}")
-
 }

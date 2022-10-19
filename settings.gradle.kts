@@ -15,4 +15,4 @@ pluginManagement {
     }
 }
 
-include(":discovery", "api-gateway", ":core",":product", ":order", ":user")
+include(":discovery", "api-gateway", ":core",":product", ":order", ":user", ":payment")
