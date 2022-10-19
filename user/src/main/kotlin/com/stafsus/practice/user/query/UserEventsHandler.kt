@@ -1,7 +1,8 @@
-package com.stafsus.practice.core.query
+package com.stafsus.practice.user.query
 
 import com.stafsus.practice.core.model.PaymentDetails
 import com.stafsus.practice.core.model.User
+import com.stafsus.practice.core.query.FetchUserPaymentDetailsQuery
 import org.axonframework.queryhandling.QueryHandler
 import org.springframework.stereotype.Component
 

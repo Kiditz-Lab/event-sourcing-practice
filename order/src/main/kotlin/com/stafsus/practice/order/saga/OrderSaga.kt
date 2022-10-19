@@ -2,11 +2,15 @@ package com.stafsus.practice.order.saga
 
 import com.stafsus.practice.core.commands.ReserveProductCommand
 import com.stafsus.practice.core.events.ProductReservedEvent
+import com.stafsus.practice.core.model.User
+import com.stafsus.practice.core.query.FetchUserPaymentDetailsQuery
 import com.stafsus.practice.order.core.event.OrderCreatedEvent
 import org.axonframework.commandhandling.callbacks.LoggingCallback
 import org.axonframework.commandhandling.gateway.CommandGateway
+import org.axonframework.messaging.responsetypes.ResponseTypes
 import org.axonframework.modelling.saga.SagaEventHandler
 import org.axonframework.modelling.saga.StartSaga
+import org.axonframework.queryhandling.QueryGateway
 import org.axonframework.spring.stereotype.Saga
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -21,6 +25,10 @@ class OrderSaga {
     @Autowired
     @Transient
     private lateinit var commandGateway: CommandGateway
+
+    @Autowired
+    @Transient
+    private lateinit var queryGateway: QueryGateway
 
     @StartSaga
     @SagaEventHandler(associationProperty = "orderId")
@@ -38,6 +46,18 @@ class OrderSaga {
     @SagaEventHandler(associationProperty = "orderId")
     fun handle(event: ProductReservedEvent) {
         log.info("ProductReservedEvent is called for orderId: ${event.orderId}, productId: ${event.productId}")
+        val query = FetchUserPaymentDetailsQuery(event.userId)
+        val userPaymentDetails: User? = try {
+            queryGateway.query(query, ResponseTypes.instanceOf(User::class.java)).join()
+        } catch (ex: Exception) {
+            log.error(ex.message)
+            null
+        }
+
+        if (userPaymentDetails == null) {
+            return
+        }
+        log.info("Successfully fetch payment details for user : ${userPaymentDetails.firstName}")
     }
 
 
