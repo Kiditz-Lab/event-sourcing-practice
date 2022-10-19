@@ -1,4 +1,4 @@
-package com.stafsus.practice.user.configuration
+package com.stafsus.practice.core.configuration
 
 import org.axonframework.commandhandling.CommandBus
 import org.axonframework.messaging.interceptors.BeanValidationInterceptor

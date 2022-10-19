@@ -1,4 +1,4 @@
-package com.stafsus.practice.order.configuration
+package com.stafsus.practice.core.configuration
 
 import com.thoughtworks.xstream.XStream
 import org.springframework.context.annotation.Bean
