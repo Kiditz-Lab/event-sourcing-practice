@@ -1,4 +1,4 @@
-package com.stafsus.practice.product.command
+package com.stafsus.practice.product.query
 
 import com.stafsus.practice.product.core.data.ProductLookupEntity
 import com.stafsus.practice.product.core.data.ProductLookupRepository

@@ -6,3 +6,8 @@ data class ProductReservedEvent(
     val userId: String,
     val quantity: Int,
 )
+
+data class PaymentProcessedEvent(
+    val paymentId: String,
+    val orderId: String,
+)

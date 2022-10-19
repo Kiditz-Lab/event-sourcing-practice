@@ -9,3 +9,12 @@ data class ProcessPaymentCommand(
     val orderId: String,
     val paymentDetails: PaymentDetails
 )
+
+
+data class ReserveProductCommand(
+    @TargetAggregateIdentifier
+    val productId: String,
+    val orderId: String,
+    val userId: String,
+    val quantity: Int,
+)

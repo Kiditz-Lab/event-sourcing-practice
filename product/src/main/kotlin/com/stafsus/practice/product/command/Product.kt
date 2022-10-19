@@ -1,8 +1,7 @@
-package com.stafsus.practice.product.command.domain
+package com.stafsus.practice.product.command
 
 import com.stafsus.practice.core.commands.ReserveProductCommand
 import com.stafsus.practice.core.events.ProductReservedEvent
-import com.stafsus.practice.product.command.RegisterProductCommand
 import com.stafsus.practice.product.core.event.ProductRegisteredEvent
 import org.apache.commons.lang.StringUtils.isBlank
 import org.axonframework.commandhandling.CommandHandler
