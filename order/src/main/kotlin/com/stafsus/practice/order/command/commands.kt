@@ -15,3 +15,8 @@ data class CreateOrderCommand(
 )
 
 
+data class ApproveOrderCommand(
+    @TargetAggregateIdentifier
+    val orderId: String
+)
+

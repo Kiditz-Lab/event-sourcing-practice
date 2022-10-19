@@ -1,5 +1,6 @@
 package com.stafsus.practice.order.command
 
+import com.stafsus.practice.order.core.event.OrderApprovedEvent
 import com.stafsus.practice.order.core.event.OrderCreatedEvent
 import com.stafsus.practice.order.core.model.OrderStatus
 import org.axonframework.commandhandling.CommandHandler
@@ -43,4 +44,16 @@ class Order {
         addressId = event.addressId
         status = event.status
     }
+
+    @CommandHandler
+    fun on(command: ApproveOrderCommand) {
+        apply(OrderApprovedEvent(command.orderId))
+    }
+
+    @EventSourcingHandler
+    fun on(event: OrderApprovedEvent) {
+        status = event.status
+    }
+
+
 }

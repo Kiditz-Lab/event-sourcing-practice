@@ -16,3 +16,8 @@ data class OrderRejectedEvent(
     val reason: String,
     val status: OrderStatus = OrderStatus.REJECTED
 )
+
+data class OrderApprovedEvent(
+    val orderId: String,
+    val status: OrderStatus = OrderStatus.APPROVED
+)

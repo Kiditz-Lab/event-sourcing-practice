@@ -1,4 +1,4 @@
-package com.stafsus.practice.core.data
+package com.stafsus.payment.core.data
 
 import org.springframework.data.repository.CrudRepository
 

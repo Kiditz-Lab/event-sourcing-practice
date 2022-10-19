@@ -1,4 +1,4 @@
-package com.stafsus.practice.command
+package com.stafsus.payment.command
 
 import com.stafsus.practice.core.commands.ProcessPaymentCommand
 import com.stafsus.practice.core.events.PaymentProcessedEvent
@@ -22,7 +22,7 @@ class Payment {
     }
 
     @EventSourcingHandler
-    fun on(event: ProcessPaymentCommand) {
+    fun on(event: PaymentProcessedEvent) {
         paymentId = event.paymentId
         orderId = event.orderId
     }

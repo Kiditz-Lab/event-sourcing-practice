@@ -2,14 +2,18 @@ package com.stafsus.practice.order.saga
 
 import com.stafsus.practice.core.commands.ProcessPaymentCommand
 import com.stafsus.practice.core.commands.ReserveProductCommand
+import com.stafsus.practice.core.events.PaymentProcessedEvent
 import com.stafsus.practice.core.events.ProductReservedEvent
 import com.stafsus.practice.core.model.User
 import com.stafsus.practice.core.query.FetchUserPaymentDetailsQuery
+import com.stafsus.practice.order.command.ApproveOrderCommand
+import com.stafsus.practice.order.core.event.OrderApprovedEvent
 import com.stafsus.practice.order.core.event.OrderCreatedEvent
 import org.apache.commons.lang.StringUtils
 import org.axonframework.commandhandling.callbacks.LoggingCallback
 import org.axonframework.commandhandling.gateway.CommandGateway
 import org.axonframework.messaging.responsetypes.ResponseTypes
+import org.axonframework.modelling.saga.EndSaga
 import org.axonframework.modelling.saga.SagaEventHandler
 import org.axonframework.modelling.saga.StartSaga
 import org.axonframework.queryhandling.QueryGateway
@@ -64,14 +68,21 @@ class OrderSaga {
         val result: String = try {
             commandGateway.sendAndWait(paymentCommand, 10, TimeUnit.SECONDS)
         } catch (e: Exception) {
+            log.error(e.message, e)
             StringUtils.EMPTY
         }
     }
 
 
-//    @EndSaga
-//    @SagaEventHandler(associationProperty = "orderId")
-//    fun handle(event: OrderRejectedEvent) {
-//        log.info("OrderRejectedEvent is called for orderId: ${event.orderId}")
-//    }
+    @SagaEventHandler(associationProperty = "orderId")
+    fun handle(event: PaymentProcessedEvent) {
+        log.info("PaymentProcessedEvent is called for orderId: ${event.orderId}")
+        commandGateway.send<String>(ApproveOrderCommand(event.orderId))
+    }
+
+    @EndSaga
+    @SagaEventHandler(associationProperty = "orderId")
+    fun handle(event: OrderApprovedEvent) {
+        log.info("OrderApprovedEvent is complete for orderId: ${event.orderId}")
+    }
 }

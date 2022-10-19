@@ -29,7 +29,7 @@ class ProductEventHandler(
 
     @EventHandler
     fun on(event: ProductReservedEvent) {
-        val product = repository.findById(event.productId).orElseThrow { IllegalArgumentException("product not found") }
+        val product = repository.findById(event.productId).orElse(null) ?: return
         repository.save(product.copy(quantity = product.quantity - event.quantity))
         log.info("ProductReservedEvent is called for productId: ${event.productId} and orderId: ${event.orderId}")
     }

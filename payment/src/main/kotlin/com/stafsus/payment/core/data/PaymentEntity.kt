@@ -1,4 +1,4 @@
-package com.stafsus.practice.core.data
+package com.stafsus.payment.core.data
 
 import org.hibernate.Hibernate
 import javax.persistence.Column

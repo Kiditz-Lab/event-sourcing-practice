@@ -1,7 +1,7 @@
-package com.stafsus.practice.events
+package com.stafsus.payment.events
 
-import com.stafsus.practice.core.data.PaymentEntity
-import com.stafsus.practice.core.data.PaymentRepository
+import com.stafsus.payment.core.data.PaymentEntity
+import com.stafsus.payment.core.data.PaymentRepository
 import com.stafsus.practice.core.events.PaymentProcessedEvent
 import org.axonframework.eventhandling.EventHandler
 import org.slf4j.LoggerFactory
