@@ -12,7 +12,6 @@ import com.stafsus.practice.core.query.FetchUserPaymentDetailsQuery
 import com.stafsus.practice.order.command.ApproveOrderCommand
 import com.stafsus.practice.order.core.event.OrderApprovedEvent
 import com.stafsus.practice.order.core.event.OrderCreatedEvent
-import org.apache.commons.lang.StringUtils
 import org.axonframework.commandhandling.callbacks.LoggingCallback
 import org.axonframework.commandhandling.gateway.CommandGateway
 import org.axonframework.messaging.responsetypes.ResponseTypes
@@ -73,7 +72,7 @@ class OrderSaga {
         try {
             commandGateway.sendAndWait(processPaymentCommand, 10, TimeUnit.SECONDS)
         } catch (e: Exception) {
-            log.error(e.message, e)
+            log.error(e.message)
             cancelProductReservation(event, e.message ?: "Could not process payment with user payment details")
         }
     }

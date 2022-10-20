@@ -20,6 +20,7 @@ data class ReserveProductCommand(
 )
 
 data class CancelProductReservationCommand(
+    @TargetAggregateIdentifier
     val productId: String,
     val orderId: String,
     val quantity: Int,
@@ -28,6 +29,7 @@ data class CancelProductReservationCommand(
 )
 
 data class RejectOrderCommand(
+    @TargetAggregateIdentifier
     val orderId: String,
     val reason: String,
 )

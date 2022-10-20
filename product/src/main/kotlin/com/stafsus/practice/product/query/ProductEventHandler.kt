@@ -37,8 +37,9 @@ class ProductEventHandler(
 
     @EventHandler
     fun on(event: ProductReservationCancelledEvent) {
-        val product = repository.findById(event.productId).orElse(null) ?: return
-        repository.save(product.copy(quantity = product.quantity + event.quantity))
-        log.info("ProductReservationCancelledEvent is called for productId: ${event.productId} and orderId: ${event.orderId}")
+        val currentProduct = repository.findById(event.productId).orElse(null) ?: return
+        log.info("ProductReservationCancelledEvent for current product qty: ${currentProduct.quantity}")
+        val newProductQty = repository.save(currentProduct.copy(quantity = currentProduct.quantity + event.quantity))
+        log.info("ProductReservationCancelledEvent called and new quantity is : ${newProductQty.quantity}")
     }
 }
