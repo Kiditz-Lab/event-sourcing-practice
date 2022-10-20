@@ -1,6 +1,8 @@
 package com.stafsus.practice.product.command
 
+import com.stafsus.practice.core.commands.CancelProductReservationCommand
 import com.stafsus.practice.core.commands.ReserveProductCommand
+import com.stafsus.practice.core.events.ProductReservationCancelledEvent
 import com.stafsus.practice.core.events.ProductReservedEvent
 import com.stafsus.practice.product.core.event.ProductRegisteredEvent
 import org.apache.commons.lang.StringUtils.isBlank
@@ -32,6 +34,14 @@ class Product {
         apply(ProductRegisteredEvent(command.productId, command.title, command.price, command.quantity))
     }
 
+    @EventSourcingHandler
+    fun on(event: ProductRegisteredEvent) {
+        productId = event.productId
+        title = event.title
+        price = event.price
+        quantity = event.quantity
+    }
+
     @CommandHandler
     fun handle(command: ReserveProductCommand) {
         if (quantity < command.quantity) {
@@ -41,15 +51,26 @@ class Product {
     }
 
     @EventSourcingHandler
-    fun on(event: ProductRegisteredEvent) {
-        productId = event.productId
-        title = event.title
-        price = event.price
-        quantity = event.quantity
+    fun on(event: ProductReservedEvent) {
+        quantity -= event.quantity
+    }
+
+
+    @CommandHandler
+    fun handle(command: CancelProductReservationCommand) {
+        apply(
+            ProductReservationCancelledEvent(
+                productId = command.productId,
+                orderId = command.orderId,
+                userId = command.userId,
+                quantity = command.quantity,
+                reason = command.reason
+            )
+        )
     }
 
     @EventSourcingHandler
-    fun on(event: ProductReservedEvent) {
-        quantity -= event.quantity
+    fun on(event: ProductReservationCancelledEvent) {
+        quantity += event.quantity
     }
 }

@@ -1,7 +1,9 @@
 package com.stafsus.practice.order.command
 
+import com.stafsus.practice.core.commands.RejectOrderCommand
 import com.stafsus.practice.order.core.event.OrderApprovedEvent
 import com.stafsus.practice.order.core.event.OrderCreatedEvent
+import com.stafsus.practice.order.core.event.OrderRejectedEvent
 import com.stafsus.practice.order.core.model.OrderStatus
 import org.axonframework.commandhandling.CommandHandler
 import org.axonframework.eventsourcing.EventSourcingHandler
@@ -46,7 +48,7 @@ class Order {
     }
 
     @CommandHandler
-    fun on(command: ApproveOrderCommand) {
+    fun handle(command: ApproveOrderCommand) {
         apply(OrderApprovedEvent(command.orderId))
     }
 
@@ -54,6 +56,14 @@ class Order {
     fun on(event: OrderApprovedEvent) {
         status = event.status
     }
+    @CommandHandler
+    fun handle(command: RejectOrderCommand) {
+        apply(OrderRejectedEvent(command.orderId, command.reason))
+    }
 
+    @EventSourcingHandler
+    fun on(event: OrderRejectedEvent) {
+        status = event.status
+    }
 
 }

@@ -1,5 +1,6 @@
 package com.stafsus.practice.product.query
 
+import com.stafsus.practice.core.events.ProductReservationCancelledEvent
 import com.stafsus.practice.core.events.ProductReservedEvent
 import com.stafsus.practice.product.core.data.ProductEntity
 import com.stafsus.practice.product.core.data.ProductRepository
@@ -32,5 +33,12 @@ class ProductEventHandler(
         val product = repository.findById(event.productId).orElse(null) ?: return
         repository.save(product.copy(quantity = product.quantity - event.quantity))
         log.info("ProductReservedEvent is called for productId: ${event.productId} and orderId: ${event.orderId}")
+    }
+
+    @EventHandler
+    fun on(event: ProductReservationCancelledEvent) {
+        val product = repository.findById(event.productId).orElse(null) ?: return
+        repository.save(product.copy(quantity = product.quantity + event.quantity))
+        log.info("ProductReservationCancelledEvent is called for productId: ${event.productId} and orderId: ${event.orderId}")
     }
 }

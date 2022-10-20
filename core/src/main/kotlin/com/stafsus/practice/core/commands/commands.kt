@@ -18,3 +18,16 @@ data class ReserveProductCommand(
     val userId: String,
     val quantity: Int,
 )
+
+data class CancelProductReservationCommand(
+    val productId: String,
+    val orderId: String,
+    val quantity: Int,
+    val userId: String,
+    val reason: String,
+)
+
+data class RejectOrderCommand(
+    val orderId: String,
+    val reason: String,
+)

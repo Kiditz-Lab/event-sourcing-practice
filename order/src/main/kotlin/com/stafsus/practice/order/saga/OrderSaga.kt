@@ -1,8 +1,11 @@
 package com.stafsus.practice.order.saga
 
+import com.stafsus.practice.core.commands.CancelProductReservationCommand
 import com.stafsus.practice.core.commands.ProcessPaymentCommand
+import com.stafsus.practice.core.commands.RejectOrderCommand
 import com.stafsus.practice.core.commands.ReserveProductCommand
 import com.stafsus.practice.core.events.PaymentProcessedEvent
+import com.stafsus.practice.core.events.ProductReservationCancelledEvent
 import com.stafsus.practice.core.events.ProductReservedEvent
 import com.stafsus.practice.core.model.User
 import com.stafsus.practice.core.query.FetchUserPaymentDetailsQuery
@@ -55,22 +58,35 @@ class OrderSaga {
         val userPaymentDetails: User = try {
             queryGateway.query(query, ResponseTypes.instanceOf(User::class.java)).join()
         } catch (ex: Exception) {
+            cancelProductReservation(event, ex.message ?: "Could not fetch user payment details")
             log.error(ex.message)
             null
         } ?: return
 
         log.info("Successfully fetch payment details for user : ${userPaymentDetails.firstName}")
-        val paymentCommand = ProcessPaymentCommand(
+        val processPaymentCommand = ProcessPaymentCommand(
             orderId = event.orderId,
             paymentDetails = userPaymentDetails.paymentDetails,
             paymentId = UUID.randomUUID().toString(),
         )
-        val result: String = try {
-            commandGateway.sendAndWait(paymentCommand, 10, TimeUnit.SECONDS)
+
+        try {
+            commandGateway.sendAndWait(processPaymentCommand, 10, TimeUnit.SECONDS)
         } catch (e: Exception) {
             log.error(e.message, e)
-            StringUtils.EMPTY
+            cancelProductReservation(event, e.message ?: "Could not process payment with user payment details")
         }
+    }
+
+    fun cancelProductReservation(event: ProductReservedEvent, reason: String) {
+        val command = CancelProductReservationCommand(
+            productId = event.productId,
+            orderId = event.orderId,
+            quantity = event.quantity,
+            userId = event.userId,
+            reason = reason
+        )
+        commandGateway.send<String>(command)
     }
 
 
@@ -84,5 +100,14 @@ class OrderSaga {
     @SagaEventHandler(associationProperty = "orderId")
     fun handle(event: OrderApprovedEvent) {
         log.info("OrderApprovedEvent is complete for orderId: ${event.orderId}")
+    }
+
+    @SagaEventHandler(associationProperty = "orderId")
+    fun handle(event: ProductReservationCancelledEvent) {
+        log.info("ProductReservationCancelledEvent is complete for orderId: ${event.orderId}")
+        commandGateway.send<String>(RejectOrderCommand(
+            orderId = event.orderId,
+            reason = event.reason
+        ))
     }
 }
