@@ -5,6 +5,7 @@ import com.stafsus.practice.product.core.data.ProductLookupRepository
 import com.stafsus.practice.product.core.event.ProductRegisteredEvent
 import org.axonframework.config.ProcessingGroup
 import org.axonframework.eventhandling.EventHandler
+import org.axonframework.eventhandling.ResetHandler
 import org.springframework.stereotype.Component
 
 @Component
@@ -19,5 +20,10 @@ class ProductLookupEventHandler(
             title = event.title,
         )
         repository.save(lookup)
+    }
+
+    @ResetHandler
+    fun resetProduct() {
+        repository.deleteAll()
     }
 }

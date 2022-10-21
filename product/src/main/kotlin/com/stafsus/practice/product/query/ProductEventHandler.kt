@@ -7,6 +7,7 @@ import com.stafsus.practice.product.core.data.ProductRepository
 import com.stafsus.practice.product.core.event.ProductRegisteredEvent
 import org.axonframework.config.ProcessingGroup
 import org.axonframework.eventhandling.EventHandler
+import org.axonframework.eventhandling.ResetHandler
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 
@@ -41,5 +42,10 @@ class ProductEventHandler(
         log.info("ProductReservationCancelledEvent for current product qty: ${currentProduct.quantity}")
         val newProductQty = repository.save(currentProduct.copy(quantity = currentProduct.quantity + event.quantity))
         log.info("ProductReservationCancelledEvent called and new quantity is : ${newProductQty.quantity}")
+    }
+
+    @ResetHandler
+    fun resetProduct(){
+        repository.deleteAll()
     }
 }

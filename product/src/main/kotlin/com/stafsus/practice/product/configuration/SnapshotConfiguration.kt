@@ -7,6 +7,6 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 class SnapshotConfiguration {
-    @Bean
+    @Bean(name = ["productSnapshotTriggerDefinition"])
     fun productSnapshotTriggerDefinition(snapshotter: Snapshotter) = EventCountSnapshotTriggerDefinition(snapshotter, 3)
 }

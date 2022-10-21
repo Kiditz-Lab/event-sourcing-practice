@@ -29,4 +29,8 @@ axon:
   event-handling:
     processors:
       product-group:
-        mode: subscribing
+        mode: TRACKING
+
+logging:
+  level:
+    org.axonframework.axonserver.connector.AxonServerConfiguration: DEBUG
