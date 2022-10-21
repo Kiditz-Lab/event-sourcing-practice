@@ -13,7 +13,7 @@ import org.axonframework.modelling.command.AggregateLifecycle.apply
 import org.axonframework.spring.stereotype.Aggregate
 import java.math.BigDecimal
 
-@Aggregate
+@Aggregate(snapshotTriggerDefinition = "productSnapshotTriggerDefinition")
 class Product {
     @AggregateIdentifier
     private lateinit var productId: String
